@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Utilizadores</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    h2 {
+      color: #333;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    th {
+      background-color: #4caf50;
+      color: #fff;
+      font-weight: bold;
+    }
+    
+    td {
+      background-color: #e8f5e9;
+    }
+    
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+    
+    button {
+      margin-top: 20px;
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Lista de Utilizadores</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Data de Nascimento</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% utilizadores.forEach(function(data) { %>
+        <tr>
+          <td><%= data.nome %></td>
+          <td><%= data.email %></td>
+          <td><%= data.dataNascimento.toISOString().split('T')[0] %></td>
+          <td>
+            <a href="/api/edit/<%= data._id %>">Editar</a> | 
+            <a href="/api/delete/<%= data._id %>">Apagar</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <button><a href="/">Voltar</a></button>
+</body>
+</html>
+

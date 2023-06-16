@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Consumo</title>
+</head>
+<body>
+  <h2>Editar Dados de Consumo</h2>
+  <form action="/api/updateconsumo/<%= consumo._id %>" method="POST">
+    <label for="nome_sensor">Nome Sensor:</label>
+    <input type="text" id="nome_sensor" name="nome_sensor" value="<%= consumo.nome_sensor %>">
+
+    <label for="data_inicio_contagem">Data Início de Contagem:</label>
+    <input type="date" id="data_inicio_contagem" name="data_inicio_contagem" value="<%= consumo.data_inicio_contagem %>" requireds>
+
+    <label for="data_fim_contagem">Data Fim de Contagem:</label>
+    <input type="date" id="data_fim_contagem" name="data_fim_contagem" value="<%= consumo.data_fim_contagem %>" required>
+
+    <label for="quantidade_consumida">Quantidade Consumida:</label>
+    <input type="text" id="quantidade_consumida" name="quantidade_consumida" value="<%= consumo.quantidade_consumida %>">
+
+    <br />
+
+    <button><a href="/api/listallconsumo">List All</a></button>
+    <button type="submit">Edit</button>
+  </form>
+</body>
+</html>

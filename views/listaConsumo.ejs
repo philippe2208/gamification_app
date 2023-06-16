@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Consumos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #4caf50;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #e8f5e9;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button a {
+      color: #fff;
+      text-decoration: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  
+  </style>
+</head>
+<body>
+  <h2>Lista de Dados de Consumo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome Sensor</th>
+        <th>Data Início de Contagem</th>
+        <th>Data Fim de Contagem</th>
+        <th>Quantidade Consumida</th>
+        <th>Utilizador</th> 
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% consumos.forEach(function(data) { %>
+        <tr>
+          <td><%= data.nome_sensor %></td>
+          <td><%= data.data_inicio_contagem.toISOString().split('T')[0] %></td>
+          <td><%= data.data_fim_contagem.toISOString().split('T')[0] %></td>
+          <td><%= data.quantidade_consumida %></td>
+          <td><%= data.utilizadorId ? data.utilizadorId.nome : '' %></td>
+          <td>
+            <a href="/api/editconsumo/<%= data._id %>">Editar</a> | 
+            <a href="/api/deleteconsumo/<%= data._id %>">Apagar</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <button><a href="/">Voltar</a></button>
+</body>
+</html>

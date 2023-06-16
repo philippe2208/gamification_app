@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabela de Classificação</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      text-align: center;
+    }
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      max-width: 800px;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #4caf50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+    button {
+      margin-top: 10px;
+    }
+    .position-icon {
+      display: inline-block;
+      width: 20px; /* Ajuste o tamanho conforme necessário */
+      margin-right: 5px; /* Ajuste o espaçamento conforme necessário */
+    }
+  </style>
+</head>
+<body>
+  <h2>Tabela de Classificação</h2>
+  <table>
+    <thead>
+      <tr>
+        
+        <th>Posição</th>
+        <th>Nome Utilizador</th>
+        <th>Quantidade Consumida</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tabelaClassificacao.forEach(function(item) { %>
+        <tr>
+          <td>
+            <% if (item.posicao === 1) { %>
+              <img src="/imagens/vencedora.png"class="position-icon">
+            <% } %>
+            <%= item.posicao %>
+          </td>
+          <td><%= item.nome_utilizador %></td>
+          <td><%= item.quantidade_consumida %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <button><a href="/">Voltar</a></button>
+</body>
+</html>

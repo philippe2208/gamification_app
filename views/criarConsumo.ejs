@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inserir dados de consumo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+      font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Inserir Dados de Consumo</h1>
+  <form action="/api/criarconsumo" method="POST">
+    <label for="nome_sensor">Nome Sensor:</label>
+    <select id="nome_sensor" name="nome_sensor" required>
+      <option value="" selected>Selecione uma das opções</option>
+      <option value="Medidor de energia eletrónico">Medidor de energia eletrónico</option>
+      <option value="Contador de água">Contador de água</option>
+    </select>
+
+
+    <label for="data_inicio_contagem">Data Ínicio de Contagem:</label>
+    <input type="date" id="data_inicio_contagem" name="data_inicio_contagem" required>
+
+    <label for="data_fim_contagem">Data Fim de Contagem:</label>
+    <input type="date" id="data_fim_contagem" name="data_fim_contagem" required>
+
+    <label for="quantidade_consumida">Quantidade Consumida:</label>
+    <input type="text" id="quantidade_consumida" name="quantidade_consumida" required>
+
+    <label for="utilizador">Utilizador:</label>
+    <select id="utilizador" name="utilizadorId" required>
+      <% utilizadores.forEach(function(utilizador) { %>
+        <option value="<%= utilizador._id %>"><%= utilizador.nome %></option>
+      <% }) %>
+    </select><br>
+
+    <button type="submit">Guardar</button>
+  </form>
+</body>
+</html>
