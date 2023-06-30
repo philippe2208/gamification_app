@@ -3,6 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>Editar Consumo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
   <h2>Editar Dados de Consumo</h2>
@@ -11,7 +67,7 @@
     <input type="text" id="nome_sensor" name="nome_sensor" value="<%= consumo.nome_sensor %>">
 
     <label for="data_inicio_contagem">Data Início de Contagem:</label>
-    <input type="date" id="data_inicio_contagem" name="data_inicio_contagem" value="<%= consumo.data_inicio_contagem %>" requireds>
+    <input type="date" id="data_inicio_contagem" name="data_inicio_contagem" value="<%= consumo.data_inicio_contagem %>" required>
 
     <label for="data_fim_contagem">Data Fim de Contagem:</label>
     <input type="date" id="data_fim_contagem" name="data_fim_contagem" value="<%= consumo.data_fim_contagem %>" required>

@@ -6,6 +6,7 @@ const utilizadorController = require('../controllers/utilizadorController');
 const consumoController = require('../controllers/consumoController');
 const classificacaoController = require('../controllers/classificacaoController');
 const recompensasController = require('../controllers/recompensasController');
+const perfilController = require('../controllers/perfilController');
 
 
 // URL do teste será: http://localhost:5000/api/teste
@@ -42,9 +43,13 @@ router.post('/updateconsumo/:id', consumoController.updateConsumo);
 router.get('/deleteconsumo/:id', consumoController.deleteConsumo);
 
 // Tabela de classificação
-router.get('/api/classificacao', classificacaoController.renderClassificacao);
+router.get('/classificacao', classificacaoController.renderClassificacao);
 
 // Rota para exibir a página de descrição das recompensas
-router.get('/api/recompensas', recompensasController.renderRecompensas);
+router.get('/recompensas', recompensasController.renderRecompensas);
+
+// Rota para exibir o perfil do utilizador
+router.get('/perfilUtilizador/:id', perfilController.renderPerfilUtilizador);
+
 
 module.exports = router;
