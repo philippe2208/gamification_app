@@ -8,6 +8,11 @@ const classificacaoController = require('./controllers/classificacaoController')
 const recompensasController = require('./controllers/recompensasController');
 const path = require("path");
 const multer = require("multer");
+const { v4: uuidv4 } = require('uuid');
+
+// Models
+const Perfil = require('./models/perfilModel');
+const Utilizador = require('./models/utilizadorModel');
 
 // Conexão à base de dados
 mongoose.connect('mongodb://localhost:27017/gamification');
@@ -28,6 +33,7 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.set("views", path.join(__dirname, "views"));
 app.use('/uploads', express.static('uploads'));
+
 // Todo o URL começado por ‘/api’ chama as rotas em ‘./routes/utilizador’
 const routes = require('./routes/rotas');
 app.use('/api', routes);
@@ -43,34 +49,59 @@ app.get('/', (req, res) => {
   res.render('homePage');
 });
 
-// Definição do armazenamento do multer
+// Configuração do multer para o upload de imagens
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads");
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + ".jpg");
+    const uniqueSuffix = Date.now() + '-' + uuidv4();
+    const fileExtension = path.extname(file.originalname);
+    cb(null, uniqueSuffix + fileExtension);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Rota para exibir o perfil do utilizador
+app.get('/api/perfilUtilizador/:id', async (req, res) => {
+  try {
+    const perfilId = req.params.id;
+    const perfil = await Perfil.findById(perfilId).lean();
+
+    if (!perfil) {
+      throw new Error('Perfil não encontrado');
+    }
+
+    const utilizadorId = perfil.id_utilizador;
+    const utilizador = await Utilizador.findById(utilizadorId).lean();
+
+    if (!utilizador) {
+      throw new Error('Utilizador não encontrado');
+    }
+
+    res.render('perfilUtilizador', { perfil, utilizador });
+  } catch (error) {
+    console.error(error);
+    res.render('error', { error: 'Ocorreu um erro ao renderizar o perfil do utilizador' });
   }
 });
 
-const maxSize = 1 * 1000 * 1000;
+// Rota para o upload da imagem de perfil
+app.post("/api/perfilUtilizador/:id/uploadProfilePicture", upload.single('mypic'), async (req, res, next) => {
+  try {
+    const perfilId = req.params.id;
+    const fileName = req.file.filename;
 
-// Configuração do multer
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: maxSize },
-  fileFilter: function (req, file, cb) {
-    const filetypes = /jpeg|jpg|png/;
-    const mimetype = filetypes.test(file.mimetype);
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Atualizar o perfil com o nome do arquivo da imagem
+    await Perfil.findByIdAndUpdate(perfilId, { imagem: fileName });
 
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-
-    cb("Error: File upload only supports the following filetypes - " + filetypes);
+    res.redirect(`/api/perfilUtilizador/${perfilId}`);
+  } catch (error) {
+    console.error(error);
+    res.render('error', { error: 'Ocorreu um erro ao fazer o upload da imagem de perfil' });
   }
-}).single("mypic");
+});
 
 // Rota para exibir o formulário de criação de consumo
 app.get('/api/criarConsumo', consumoController.renderCriarConsumo);
@@ -85,25 +116,6 @@ app.get('/api/classificacao', classificacaoController.renderClassificacao);
 
 // Rota para exibir as recompensas
 app.get('/api/recompensas', recompensasController.renderRecompensas);
-
-// Rota para o upload da imagem de perfil
-app.post("/api/perfilUtilizador/:id/uploadProfilePicture", function (req, res, next) {
-  upload(req, res, function (err) {
-    if (err) {
-      res.send(err);
-    } else {
-      // Obtém o nome do arquivo enviado
-      const fileName = req.file.filename;
-
-      // Obtém o ID do perfil a partir dos parâmetros da rota
-      const perfilId = req.params.id;
-
-      // Redireciona para a página de perfil do utilizador
-      res.redirect(`/api/perfilUtilizador/${perfilId}`);
-    }
-  });
-});
-
 
 // Servidor à escuta na porta 5000
 const port = 5000;

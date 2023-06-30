@@ -20,8 +20,6 @@
       align-items: center;
     }
 
-
-
     .profile-info {
       display: flex;
       flex-direction: column;
@@ -90,21 +88,17 @@
 </head>
 <body>
   <h2>Perfil do Utilizador</h2>
-  <h1>Single File Upload Demo</h1>
-   
-  <form action="/api/perfilUtilizador/<%= perfil._id %>/uploadProfilePicture" 
-    enctype="multipart/form-data" method="POST">
-    <span>Upload Profile Picture:</span>  
+
+  <form action="/api/perfilUtilizador/<%= perfil._id %>/uploadProfilePicture" enctype="multipart/form-data" method="POST">
+    <span>Upload Profile Picture:</span>
     <input type="file" name="mypic" required/><br>
     <input type="submit" value="Submit"> 
   </form>
-  
 
   <div class="profile-container">
     <div class="profile-picture">
-      <img src="/uploads/<%= utilizador.fotoPerfil %>" alt="Imagem de Perfil">
+      <img src="/uploads/<%= perfil.imagem %>" alt="Imagem de Perfil">
     </div>
-    
     <div class="profile-info">
       <div class="profile-name">
         <%= utilizador.nome %>
